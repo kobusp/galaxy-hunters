@@ -19,14 +19,19 @@ I want to share and reuse JavaScript modules between client and server by making
 <li><a href="https://schteppe.github.io/p2.js/">p2.js</a></li>
 </ul>
 
-<h2>Installation</h2>
+<h2>Install</h2>
 ```
-npm install
+$ npm install
+```
+
+<h2>Build</h2>
+```
+$ gulp
 ```
 
 <h2>Run</h2>
 ```
-node .
+$ node .
 ```
 Then point your browser (must support web sockets) to http://localhost:3000
 
