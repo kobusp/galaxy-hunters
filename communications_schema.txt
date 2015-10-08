@@ -1,0 +1,26 @@
+===============================================================================
+Galaxy Hunters v1
+===============================================================================
+
+Communications Schema
+-------------------------------------------------------------------------------
+
+1. Player joins game
+	
+	Client -> Server:	Request to join with username
+	Server -> Client:	Reject or accept with spawn position, also full download of other objects in game
+	Server -> All clients:	Player has joined with spawn position
+	
+2. Player leaves game
+	
+	Client -> Server:	Disconnect
+	Server -> All clients:	Scene.remove [Player]
+	
+3. Player moves
+
+	Client -> Server:	Player hit a move key n-number of times
+	Server -> All clients:	Scene.update [Player.(acceleration,rotation)]
+	
+	
+	
+world -> body -> shape

@@ -18,3 +18,11 @@ I want to share and reuse JavaScript modules between client and server by making
 <li><a href="http://socket.io/">Socket.IO</a></li>
 <li><a href="https://schteppe.github.io/p2.js/">p2.js</a></li>
 </ul>
+
+<h2>Installation</h2>
+npm install
+
+<h2>Run</h2>
+node .
+
+Then point your browser (must support web sockets) on http://localhost:3000
