@@ -1,7 +1,7 @@
 # galaxy-hunters
-A browser-based action multiplayer role-playing space shooter.
+A browser-based action multiplayer role-playing space shooter in very early stages of development.
 
-The aim of this project is for me to learn about network programming and browser-based game development, while developing a game that my kids and I can enjoy creating and playing together. 
+The aim of this project is to learn about network programming and browser-based game development, while developing a game that my kids and I can enjoy creating and playing together. 
 
 I want to share and reuse JavaScript modules between client and server by making use of the following libraries:<br/>
 
@@ -29,3 +29,25 @@ npm install
 node .
 ```
 Then point your browser (must support web sockets) to http://localhost:3000
+
+<h2>Roadmap</h2>
+* Develop a scheme for client and server module sharing.
+* Design the scene-graph and how each client should receive updates.
+* Add a ship when a player connects.
+* Remove player's ship when disconnecting.
+* Client keyboard / mouse inputs.
+* Server to keep track of all world physics.
+* Have the client simulate physics of all entities currently in view from the point of latest server update.
+* Server to send full updates only when client goes out of sync.
+* Implement smoothing/tweening to compensate for inevitable network latency.
+* Projectiles.
+* Collision grouping and handling.
+* Collision effects - particle emmiters and animations sprites.
+* Player design.
+* World design.
+* UI.
+* Resources & loot.
+* Depots & refineries.
+* Currency & economy.
+* Player vs player.
+* ...
