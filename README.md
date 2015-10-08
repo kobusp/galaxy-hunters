@@ -28,4 +28,4 @@ npm install
 ```
 node .
 ```
-Then point your browser (must support web sockets) on http://localhost:3000
+Then point your browser (must support web sockets) to http://localhost:3000
