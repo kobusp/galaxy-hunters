@@ -21,17 +21,17 @@ I want to share and reuse JavaScript modules between client and server by making
 
 <h2>Install</h2>
 ```
-$ npm install
+>npm install -g
 ```
 
 <h2>Build</h2>
 ```
-$ gulp
+>gulp
 ```
 
 <h2>Run</h2>
 ```
-$ node .
+>node .
 ```
 Then point your browser (must support web sockets) to http://localhost:3000
 
