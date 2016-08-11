@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/kobusp/galaxy-hunters.svg?branch=master)](https://travis-ci.org/kobusp/galaxy-hunters)
+[![Coverage Status](https://coveralls.io/repos/github/kobusp/galaxy-hunters/badge.svg?branch=master)](https://coveralls.io/github/kobusp/galaxy-hunters?branch=master)
 
 # galaxy-hunters
 A browser-based action multiplayer role-playing space shooter in very early stages of development.
