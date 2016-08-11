@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kobusp/galaxy-hunters.svg?branch=master)](https://travis-ci.org/kobusp/galaxy-hunters)
+
 # galaxy-hunters
 A browser-based action multiplayer role-playing space shooter in very early stages of development.
 
