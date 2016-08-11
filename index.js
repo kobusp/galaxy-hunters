@@ -30,7 +30,7 @@ function startServer() {
   });
 
   setInterval(function () {  // Start the game loop
-//    update();
+    update();
   }, 1000 * TIME_STEP);
 
   http.listen(3000, function () { // Start HTTP server
@@ -47,6 +47,9 @@ function startServer() {
   console.log(e1);
 }
 
+function update() {
+  
+}
 
 //==============================================================================
 // Main program
