@@ -17,10 +17,6 @@ var Entity = function (_x, _y, _mass, _velocity, _angle) {
   velocity = _velocity;
   angle = _angle;
 
-  function answer() {
-    return 42;
-  }
-
   function distance(entity) {
     return Math.sqrt(Math.pow(x - entity.getX(), 2) +
             Math.pow(y - entity.getY(), 2));
@@ -54,7 +50,6 @@ var Entity = function (_x, _y, _mass, _velocity, _angle) {
     radius: radius,
     velocity: velocity,
     angle: angle,
-    answer: answer,
     distance: distance,
     getX: getX,
     getY: getY,
