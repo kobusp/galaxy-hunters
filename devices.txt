@@ -1,0 +1,40 @@
+===============================================================================
+Galaxy Hunters v1
+===============================================================================
+
+Devices
+-------------------------------------------------------------------------------
+
+1. Main Attributes
+
+  a. Power Rate     Rate of power production per timestep. Affected by heat.
+  b. Power Flow     Strength of power supply.
+  c. Power Capacity Amount of power that can be stored.
+  d. Heat Rate      Amount of heat produced per timestep.
+
+1.1 Power Rate
+
+  The rate at which power is produced or consumed.
+
+2. Device Types
+
+  a. Generator      Produces power and generates heat as a side product. Has a 
+                    relatively small power capacity. The power flow limits the 
+                    size of power consuming devices that can be connected. Heat
+                    reduces the efficiency and power production can be 
+                    negatively or positively affected by a presence or lack 
+                    thereof.
+
+  b. Battery        Consumes and produces power at the same rate it is charged 
+                    with, up to a maximum capacity. Won't start charging unless
+                    it receives at least the same power flow.
+
+  c. Radiator       
+
+  d. Thruster       Consumes power at a set rate while demanding a minimum power
+                    flow in order to operate. Thrust is a linear function of 
+                    power rate of the device. It consumes power only when 
+                    switched on.
+
+  e. Shield         
+                

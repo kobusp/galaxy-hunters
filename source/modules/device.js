@@ -19,13 +19,16 @@
  */
 var Device = function (_powerRate, _powerFlow, _powerCapacity, _heatRate) {
   var powerRate, powerFlow, powerCapacity, heatRate,
-          effectivePowerRate, powerVolume, heat, timestep, linkedDevices;
+          effectivePowerRate, powerVolume, heat, timestep, initialTimestep,
+          linkedDevices, started, on;
 
   powerRate = _powerRate;
   powerFlow = _powerFlow;
   powerCapacity = _powerCapacity;
   heatRate = _heatRate;
   linkedDevices = [];
+  started = false;
+  on = false;
 
   /**
    * Start the simulation.
@@ -39,28 +42,98 @@ var Device = function (_powerRate, _powerFlow, _powerCapacity, _heatRate) {
     powerVolume = powerCapacity;
     heat = 0;
     timestep = _timestep;
+    initialTimestep = _timestep;
+    started = true;
+
+    startLinkedDevices(linkedDevices);
   }
 
   /**
-   * Calculate current values for given timestep.
+   * Calculate current values for given timestep. Step any linked devices by the
+   * same amount to synchronize the simulation. If any linked devices haven't
+   * started, start them.
    * @param {int} _timestep   Simulation current time.
    */
   function step(_timestep) {
-    var timeElapsed = _timestep - timestep;
+    var timeElapsed = _timestep - initialTimestep;
 
-    heat = limitHeat(heatRate, timeElapsed);
-    effectivePowerRate = calculateEffectivePowerRate(powerRate, heat);
-    powerVolume = calculatePowerVolume(powerVolume, effectivePowerRate, powerCapacity, timeElapsed);
+    if (on) {
+      heat = limitHeat(heatRate, linkedDevices, timeElapsed);
+      effectivePowerRate = calculateEffectivePowerRate(powerRate, heat);
+      powerVolume = calculatePowerVolume(powerVolume, effectivePowerRate, powerCapacity, timeElapsed);
+    } else {
+      heat = limitHeat(0, linkedDevices, timeElapsed);
+      effectivePowerRate = 0;
+      powerVolume = calculatePowerVolume(powerVolume, effectivePowerRate, powerCapacity, timeElapsed);
+    }
+    timestep = _timestep;
+    stepLinkedDevices(linkedDevices, _timestep);
+  }
+
+  /**
+   * Establish a bi-directional link between this device and a another device.
+   * @param {Device} _device  Another device
+   */
+  function link(_device) {
+    if (linkedDevices.indexOf(_device) >= 0) {
+      return;
+    }
+    linkedDevices.push(_device);
+    _device.link(this);
+  }
+
+  function turnOn() {
+    on = true;
+    // TODO: Should only be able to turn on once
+    // 1. The power flow is sufficient
+    // 2. The power rate is sufficient
+  }
+
+  function turnOff() {
+    on = false;
+  }
+
+  /**
+   * Start linked devices if not started.
+   * @param {array} _linkedDevices  Array of devices.
+   */
+  function startLinkedDevices(_linkedDevices) {
+    for (var i = 0; i < _linkedDevices.length; i++) {
+      var device = _linkedDevices[i];
+      if (!device.hasStarted()) {
+        device.start(0);
+      }
+    }
+  }
+
+  /**
+   * Step the simulation for a list of devices, ensuring that each has started.
+   * @param {array} _linkedDevices  Array of devices.
+   * @param {int}   _timestep       Timestep of the simulation.
+   */
+  function stepLinkedDevices(_linkedDevices, _timestep) {
+    for (var i = 0; i < _linkedDevices.length; i++) {
+      if (_linkedDevices[i].getTimestep() !== _timestep) {
+        _linkedDevices[i].step(_timestep);
+      }
+    }
   }
 
   /**
    * Heat can only be in the range [-100,100]
    * @param {double} _heatRate      Heat rate
+   * @param {array}  _linkedDevices All linked devices.
    * @param {int}    _timeElapsed   Time elapsed since begin of simulation.
    * @returns {double}
    */
-  function limitHeat(_heatRate, _timeElapsed) {
-    var _heat = _heatRate * _timeElapsed;
+  function limitHeat(_heatRate, _linkedDevices, _timeElapsed) {
+    var effectiveHeatRate = _heatRate;
+
+    for (var i = 0; i < _linkedDevices.length; i++) {
+      effectiveHeatRate += linkedDevices[i].getHeatRate();
+    }
+
+    var _heat = effectiveHeatRate * _timeElapsed;
     if (_heat < -100) {
       return -100;
     } else if (_heat > 100) {
@@ -102,20 +175,40 @@ var Device = function (_powerRate, _powerFlow, _powerCapacity, _heatRate) {
   return {
     start: start,
     step: step,
+    link: link,
+    turnOn: turnOn,
+    turnOff: turnOff,
+    hasStarted: function () {
+      return started;
+    },
+    isOn: function () {
+      return on;
+    },
     getHeat: function () {
       return heat;
     },
     getEffectivePowerRate: function () {
-      return effectivePowerRate;
+      if (on) {
+        return effectivePowerRate;
+      } else {
+        return 0;
+      }
     },
     getPowerVolume: function () {
       return powerVolume;
     },
-    linkDevice: function(_device) {
-      linkedDevices.push(_device);
+    getHeatRate: function () {
+      if (on) {
+        return heatRate;
+      } else {
+        return 0;
+      }
+    },
+    getTimestep: function () {
+      return timestep;
     }
   };
-  
+
 };
 
 module.exports = Device;
