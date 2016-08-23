@@ -8,7 +8,7 @@ Devices
 1. Main Attributes
 
   a. Power Rate     Rate of power production per timestep. Affected by heat.
-  b. Power Flow     Strength of power supply.
+  b. Power Flow     Strength of power supply (Amps).
   c. Power Capacity Amount of power that can be stored.
   d. Heat Rate      Amount of heat produced per timestep.
 
